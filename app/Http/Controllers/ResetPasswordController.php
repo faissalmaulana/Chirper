@@ -28,7 +28,21 @@ class ResetPasswordController extends Controller
         $request->validate([
             "token" => "required",
             "password" => "required|min:8|confirmed",
+            "email" => "required|email",
         ]);
+
+        if (
+            Hash::check(
+                $request->only("password")["password"],
+                $request->user()->password,
+            )
+        ) {
+            return back()->with(
+                "invalid",
+                "password can not the same with the current password",
+            );
+        }
+
         $status = Password::reset(
             $request->only(
                 "email",
