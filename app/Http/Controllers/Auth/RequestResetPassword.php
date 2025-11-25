@@ -16,7 +16,7 @@ class RequestResetPassword extends Controller
     {
         $validated = $request->validate(["email" => "required|email"]);
 
-        $user = Auth::user();
+        $user = $request->user();
 
         if ($user->email !== $validated["email"]) {
             return back()
@@ -27,7 +27,7 @@ class RequestResetPassword extends Controller
                 ->onlyInput("email");
         }
 
-        $token = Password::createToken($request->user());
+        $token = Password::createToken($user);
 
         return redirect("/reset-password/$token");
     }
