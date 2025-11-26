@@ -59,9 +59,13 @@ class ChirpController extends Controller
 
         $chirp = Chirp::with("comments")->find($serializedId);
 
-        return view("chirps.detail", [
-            "chirp" => $chirp,
-        ]);
+        if (isset($chirp)) {
+            return view("chirps.detail", [
+                "chirp" => $chirp,
+            ]);
+        } else {
+            return redirect("/");
+        }
     }
 
     /**
