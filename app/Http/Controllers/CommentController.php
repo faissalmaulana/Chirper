@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Chirp;
 use App\Models\Comment;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -68,6 +70,12 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $this->authorize("delete", $comment);
+        $comment->delete();
+
+        return redirect("/chirps/{$comment->chirp->id}")->with(
+            "success",
+            "delete comment",
+        );
     }
 }

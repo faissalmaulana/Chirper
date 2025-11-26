@@ -42,7 +42,9 @@
         <!-- Feed -->
         <div class="space-y-4 mt-8">
             @forelse ($chirps as $chirp)
-                <x-chirp :chirp="$chirp" />
+                <a href="/chirps/{{$chirp->id}}" class="mx-1">
+                    <x-chirp :chirp="$chirp" />
+                </a>
             @empty
                 <div class="hero py-12">
                     <div class="hero-content text-center">

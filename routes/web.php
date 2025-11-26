@@ -21,6 +21,7 @@ Route::middleware("auth")->group(function () {
     Route::delete("/chirps/{chirp}", [ChirpController::class, "destroy"]);
 
     Route::post("/comments", [CommentController::class, "store"]);
+    Route::delete("/comments/{comment}", [CommentController::class, "destroy"]);
 });
 
 // Registration routes
